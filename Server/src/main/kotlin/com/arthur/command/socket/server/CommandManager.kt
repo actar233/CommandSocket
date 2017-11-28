@@ -24,6 +24,7 @@ object CommandManager{
     fun call(args:List<String>,channel: Channel){
         try {
             if(args.size>0){
+                println(args)
                 val commandName=args[0]
                 if(list.containsKey(commandName)){
                     list[commandName]!!.newInstance().command(args.subList(1,args.size),channel)
@@ -31,7 +32,6 @@ object CommandManager{
             }
         }catch (e:Exception){
             e.printStackTrace()
-        }finally {
             channel.close()
         }
     }

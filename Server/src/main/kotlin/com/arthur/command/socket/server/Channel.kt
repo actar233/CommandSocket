@@ -152,7 +152,7 @@ class Channel(val socket:Socket){
      * @return Unit
      */
     fun writes(vararg texts:String){
-        if(texts==null || texts.size==0){
+        if(texts.size==0){
             return
         }
         write(encode(listOf(*texts)))
