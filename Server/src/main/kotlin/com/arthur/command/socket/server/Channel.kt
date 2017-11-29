@@ -8,6 +8,7 @@ import java.net.Socket
  * 通道
  */
 class Channel(val socket:Socket){
+    private var isClosed=false
     private val input:InputStream
     private val bufferedReader:BufferedReader
     private val output:OutputStream
@@ -28,7 +29,7 @@ class Channel(val socket:Socket){
         }.start()
     }
     private fun run(){
-        while (!socket.isClosed){
+        while (!isClosed){
             CommandManager.call(reads(),this@Channel)
         }
     }
@@ -168,6 +169,7 @@ class Channel(val socket:Socket){
         input.close()
         output.close()
         socket.close()
+        isClosed=true
     }
 
     /**

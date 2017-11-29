@@ -7,11 +7,12 @@ import java.net.Socket
  * 通道
  */
 open class Channel(ip:String,port:Int){
-    val socket=Socket(ip,port)
-    val input=socket.getInputStream()
-    val bufferedReader=input.bufferedReader(ClientConfig.charset)
-    val output=socket.getOutputStream()
-    val bufferedWriter=output.bufferedWriter(ClientConfig.charset)
+    private val socket=Socket(ip,port)
+    private var isClosed=false
+    private val input=socket.getInputStream()
+    private val bufferedReader=input.bufferedReader(ClientConfig.charset)
+    private val output=socket.getOutputStream()
+    private val bufferedWriter=output.bufferedWriter(ClientConfig.charset)
     /**
      * 读取一行数据
      * @return String
@@ -142,11 +143,13 @@ open class Channel(ip:String,port:Int){
      * @return Unit
      */
     fun close(){
+        write("CloseSocket")
         bufferedReader.close()
         bufferedWriter.close()
         input.close()
         output.close()
         socket.close()
+        isClosed=true
     }
 
     /**
